@@ -3,6 +3,8 @@ package fr.demos.formation.poe.cinegrandearche.web;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.annotation.Resource;
+import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fr.demos.formation.poe.cinegrandearche.data.ArticleDAO;
 import fr.demos.formation.poe.cinegrandearche.data.ArticleDAOMySql;
 import fr.demos.formation.poe.cinegrandearche.metier.Article;
 import fr.demos.formation.poe.cinegrandearche.metier.Livre;
@@ -18,6 +21,10 @@ import fr.demos.formation.poe.cinegrandearche.metier.Livre;
 @WebServlet("/ControlerArticles")
 public class ControlerArticles extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
+	// appel de l'interface on pourra choisir son dao si plusieurs
+	@Inject ArticleDAO articleDaoCDI;
+
 
 	public ControlerArticles() {
 		super();
@@ -77,15 +84,22 @@ public class ControlerArticles extends HttpServlet {
 			// itérer et mettre les résultats dans catalogue dans session
 			// après une recherche on ne remet pas le catalogue à son état d'avant la recherche
 			// il faudra faire une nouvelle recherche ou appeler select sans argument
-			try {
-				ArticleDAOMySql articleDAOMySql = new ArticleDAOMySql();
-				ArrayList<Article> catalogue = (ArrayList<Article>) articleDAOMySql.select(recherche);
-				session.setAttribute("catalogue", catalogue);
-				
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
+			//ancienne version
+//			try {
+//				ArticleDAOMySql articleDAOMySql = new ArticleDAOMySql();
+//				ArrayList<Article> catalogue = (ArrayList<Article>) articleDAOMySql.select(recherche);
+//				session.setAttribute("catalogue", catalogue);
+//				
+//			} catch (Exception e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+			
+			// version avec injection
+			ArrayList<Article> catalogue = (ArrayList<Article>) articleDaoCDI.select(recherche);
+			session.setAttribute("catalogue", catalogue);
+
 			
 			//je mets le critère de recherche dans la requete pour le cas où on ne trouve rien
 			String critereRecherche = request.getParameter("recherche");

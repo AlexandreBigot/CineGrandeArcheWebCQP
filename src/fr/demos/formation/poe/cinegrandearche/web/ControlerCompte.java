@@ -2,6 +2,7 @@ package fr.demos.formation.poe.cinegrandearche.web;
 
 import java.io.IOException;
 
+import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fr.demos.formation.poe.cinegrandearche.data.CompteDAO;
 import fr.demos.formation.poe.cinegrandearche.exceptions.ExceptionPasswordFail;
 import fr.demos.formation.poe.cinegrandearche.metier.Compte;
 import fr.demos.formation.poe.cinegrandearche.metier.CompteLogin;
@@ -18,6 +20,8 @@ import fr.demos.formation.poe.cinegrandearche.metier.CompteLogin;
 public class ControlerCompte extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	@Inject	private CompteLogin compteLoginCDI;
+	
 	// a gérer dans Compte.java puis instancier un compte et le récupérer
 //	private boolean connecteAuCompte = false;
 
@@ -73,12 +77,12 @@ public class ControlerCompte extends HttpServlet {
 			String password = request.getParameter("password");
 			
 			// je crée un objet pour tester ma connexion au compte
-			CompteLogin compteLogin = new CompteLogin();
+			//CompteLogin compteLogin = new CompteLogin();
 			
 			// j'appelle la méthode pour me connecter avec les infos saisies dans la vue
 			// et me retourner un compte ou null
 			try {
-				Compte compteConnecte = compteLogin.getCompteSiConnexionReussie(email, password);
+				Compte compteConnecte = compteLoginCDI.getCompteSiConnexionReussie(email, password);
 		    	session.setAttribute("compteSession", compteConnecte);
 				if(compteConnecte == null){
 					System.out.println("mon compteSession est null : " + compteConnecte);

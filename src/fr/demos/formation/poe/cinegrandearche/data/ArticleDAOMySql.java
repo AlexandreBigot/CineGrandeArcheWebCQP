@@ -23,6 +23,7 @@ public class ArticleDAOMySql implements ArticleDAO {
 	//plus besoin du context en CDI
 	//private Context context;
 	@Resource(mappedName="java:comp/env/jdbc/CineGrandeArche")
+	// on mets datasource à disposition
 	private DataSource dataSource;
 		
 	// dans le constructeur je lance le context (annuaire) et le datasource (pool de connexion)
@@ -138,7 +139,7 @@ public class ArticleDAOMySql implements ArticleDAO {
 			// stockage de l'ensemble des résultats Livre qu'on peut parcourrir
 			ResultSet rs = contexteRequeteLivre.executeQuery();
 			
-			// on parcours caque élément de l'objet
+			// on parcours chaque élément de l'objet
 			while (rs.next()) {
 				
 				Livre livre;

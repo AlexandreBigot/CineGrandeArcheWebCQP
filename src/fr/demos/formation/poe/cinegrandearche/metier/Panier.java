@@ -47,7 +47,6 @@ public class Panier implements Iterable<LignePanier> {
 		LignePanier lp1 = new LignePanier(a, quantiteAjoutée);
 		int indexDeMaLigne = lignesPanier.indexOf(lp1);
 		
-		// modif importante !!!
 		// si la ligne a déjà des articles il faut les comptabiliser pour comparer au stock
 		// test sur quantitéLignePlusQuantiteAjoutée, pas uniquement sur la quantité ajoutée !!!
 		int quantitéLignePlusQuantiteAjoutée = lp1.getQuantite() + quantiteAjoutée;

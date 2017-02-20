@@ -16,7 +16,7 @@ public class CompteDAOMySql implements CompteDAO {
 	
 	//plus besoin context avec CDI
 	//private Context context;
-	@Resource(mappedName="java:comp/env/jdbc/CineGrandeArche") 
+	@Resource(name="jdbc/CineGrandeArche") 
 	private DataSource dataSource;
 	
 	// dans le constructeur je lance le context (annuaire) et le datasource (pool de connexion)

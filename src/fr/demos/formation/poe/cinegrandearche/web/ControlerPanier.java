@@ -56,56 +56,56 @@ public class ControlerPanier extends HttpServlet {
 // ########### événements Article.jsp ###########
 		// si on clique sur ajouter au panier
 		// TODO : vérification nom utilisateur et mdp pour valider connection
-		if (action != null && action.equals("Ajouter au panier")) {
-
-			// ### je récupère la quantité mais c'est un string ###
-			String stringQuantiteAjoutee = request.getParameter("quantiteAjouteePanier");
-			// transforme stringQuantitéAjoutee en intQuantiteAjoutee
-			int intQuantiteAjoutee = Integer.parseInt(stringQuantiteAjoutee);
-
-			// ### je récupere la réf de l'article ###
-			String refArticle = request.getParameter("refArticle");
-
-			// ### je récupère l'arraylist du controlerArticle en le castant en arrayList
-			ArrayList<Article> catalogue = (ArrayList<Article>) session.getAttribute("catalogue");
-
-			// et je cherche l'article de cette réf###
-			// pour chaque article du catalogue
-			for (Article article : catalogue) {
-				// là où réf de l'article est la même que celle récupérée dans le bouton
-				if (article.getRef().equals(refArticle)) {
-					// Je me connecte au panier de la session en le castant
-					Panier p = (Panier) session.getAttribute("panier");
-					// ### je déclenche la méthode panier ajouterArticle###
-					try {
-						p.ajouterUnArticle(article, intQuantiteAjoutee);
-
-					} catch (ExceptionQuantiteDemandeeSuperieureAuStock e) {
-						String message = e.getMessage();
-						int quantiteStock = e.getQuantiteStock();
-						// je mets les éléments du message dans une variable
-						// unique pour la mettre en argument du setAttribute
-						String messageExceptionQDSAS = message + quantiteStock;
-						// je mets à disposition le message en EL pour la requete
-						request.setAttribute("ExceptionQuantiteDemandeeSuperieureAuStock", messageExceptionQDSAS);
-						// je mets dans la session la référence de l'article mis
-						// dans le panier
-						session.setAttribute("referenceArticlePanier", refArticle);
-					}
-					// break pour arrêter de boucler car on aura qu'une seule
-					// fois cet article (référence unique)
-					break;
-				} // if
-			} // for article catalogue
-			// je récupère la requête et je renvoie vers la JSP
-			RequestDispatcher rd = request.getRequestDispatcher("/Articles.jsp");
-			rd.forward(request, response);
-			
-			//je renseigne la nouvelle jsp courante après chaque rd.forward (la même que le forward)
-	    	String jspCourante = "/Articles.jsp";
-	    	session.setAttribute("jspCourante", jspCourante);
-			
-		} // if bouton ajouter au panier
+//		if (action != null && action.equals("Ajouter au panier")) {
+//
+//			// ### je récupère la quantité mais c'est un string ###
+//			String stringQuantiteAjoutee = request.getParameter("quantiteAjouteePanier");
+//			// transforme stringQuantitéAjoutee en intQuantiteAjoutee
+//			int intQuantiteAjoutee = Integer.parseInt(stringQuantiteAjoutee);
+//
+//			// ### je récupere la réf de l'article ###
+//			String refArticle = request.getParameter("refArticle");
+//
+//			// ### je récupère l'arraylist du controlerArticle en le castant en arrayList
+//			ArrayList<Article> catalogue = (ArrayList<Article>) session.getAttribute("catalogue");
+//
+//			// et je cherche l'article de cette réf###
+//			// pour chaque article du catalogue
+//			for (Article article : catalogue) {
+//				// là où réf de l'article est la même que celle récupérée dans le bouton
+//				if (article.getRef().equals(refArticle)) {
+//					// Je me connecte au panier de la session en le castant
+//					Panier p = (Panier) session.getAttribute("panier");
+//					// ### je déclenche la méthode panier ajouterArticle###
+//					try {
+//						p.ajouterUnArticle(article, intQuantiteAjoutee);
+//
+//					} catch (ExceptionQuantiteDemandeeSuperieureAuStock e) {
+//						String message = e.getMessage();
+//						int quantiteStock = e.getQuantiteStock();
+//						// je mets les éléments du message dans une variable
+//						// unique pour la mettre en argument du setAttribute
+//						String messageExceptionQDSAS = message + quantiteStock;
+//						// je mets à disposition le message en EL pour la requete
+//						request.setAttribute("ExceptionQuantiteDemandeeSuperieureAuStock", messageExceptionQDSAS);
+//						// je mets dans la session la référence de l'article mis
+//						// dans le panier
+//						session.setAttribute("referenceArticlePanier", refArticle);
+//					}
+//					// break pour arrêter de boucler car on aura qu'une seule
+//					// fois cet article (référence unique)
+//					break;
+//				} // if
+//			} // for article catalogue
+//			// je récupère la requête et je renvoie vers la JSP
+//			RequestDispatcher rd = request.getRequestDispatcher("/Articles.jsp");
+//			rd.forward(request, response);
+//			
+//			//je renseigne la nouvelle jsp courante après chaque rd.forward (la même que le forward)
+//	    	String jspCourante = "/Articles.jsp";
+//	    	session.setAttribute("jspCourante", jspCourante);
+//			
+//		} // if bouton ajouter au panier
 
 		
 		// si on clique sur Voir le panier j'affiche la page Panier

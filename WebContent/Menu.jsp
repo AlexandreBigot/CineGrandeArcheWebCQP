@@ -70,9 +70,9 @@
 		
 		<div class="elementMenu" id="elementMenuContenuPanier">
 			<div>
-				Le panier contient ${panier.getArticlesCumulesPanier()} articles <br />
+				Le panier contient <span id="artCumuPanier">${panier.getArticlesCumulesPanier()}</span> articles <br />
 				Montant total HT :
-				<fmt:formatNumber value="${panier.getPrixTotal()}" minFractionDigits="2" />€
+				<span id="pxTotalPanier"><fmt:formatNumber value="${panier.getPrixTotal()}" minFractionDigits="2" /></span>€
 			</div>
 		</div>
 	</div>

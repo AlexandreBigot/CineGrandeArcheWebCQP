@@ -20,7 +20,7 @@ public class ListenerPanier implements HttpSessionListener {
 	//@Inject private ArticleDAOMySql articleDAOMySqlCDI;
 	
 	// appel de l'interface on pourra choisir son dao si plusieurs
-	@Inject ArticleDAO articleDaoCDI;
+	@Inject private ArticleDAO articleDaoCDI;
 	
 	
     public ListenerPanier() {
